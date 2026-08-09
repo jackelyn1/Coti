@@ -203,22 +203,75 @@
 
     .totalbar .box.final .v{ font-size:22px; }
   }
+
+  /* ---- cover (portada) ---- */
+  .cover{
+    background:
+      radial-gradient(ellipse 900px 500px at 85% -10%, rgba(201,161,92,.16), transparent 60%),
+      linear-gradient(160deg,#0E2233 0%,#0A1B29 60%,#0C1F2F 100%);
+    color:#EDF1F4;
+    padding:72px 24px 56px;
+  }
+  .cover-inner{ max-width:872px; margin:0 auto; display:flex; flex-direction:column; min-height:640px; }
+  .cover-brand{ display:flex; align-items:center; gap:14px; }
+  .cover-brand svg{ width:46px; height:46px; flex:none; }
+  .cover-brand .word{ font-family:Georgia,"Iowan Old Style","Palatino Linotype",serif; font-size:19px; letter-spacing:.14em; color:#EDF1F4; }
+  .cover-brand .word b{ color:#C9A15C; }
+  .cover-tagline{ margin-top:2px; font-size:12px; letter-spacing:.06em; color:#8FA3B3; }
+
+  .cover-mid{ flex:1; display:flex; flex-direction:column; justify-content:center; padding:56px 0; }
+  .cover-eyebrow{ font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:#C9A15C; font-weight:700; margin-bottom:16px; }
+  .cover-title{ font-family:Georgia,"Iowan Old Style","Palatino Linotype",serif; font-size:clamp(30px,4.6vw,46px); line-height:1.12; color:#FFFFFF; text-wrap:balance; max-width:14ch; }
+  .cover-sub{ margin-top:16px; font-size:16.5px; line-height:1.6; color:#B9C6D0; font-style:italic; font-family:Georgia,serif; max-width:46ch; }
+
+  .cover-meta{
+    margin-top:10px; display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    border-top:1px solid rgba(255,255,255,.14); padding-top:20px; gap:20px;
+  }
+  .cover-meta .label{ font-size:10.5px; text-transform:uppercase; letter-spacing:.09em; color:#7F94A4; margin-bottom:5px; }
+  .cover-meta .value{ font-size:14.5px; font-weight:600; color:#EDF1F4; }
+  .cover-meta .value.accent{ color:#C9A15C; }
+
+  @media (max-width:480px){
+    .cover{ padding:44px 18px 36px; }
+    .cover-inner{ min-height:0; }
+    .cover-brand svg{ width:36px; height:36px; }
+    .cover-brand .word{ font-size:16px; }
+    .cover-mid{ padding:38px 0; }
+    .cover-title{ max-width:100%; }
+  }
 </style>
 
-<div class="page">
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-brand">
+      <svg viewBox="0 0 200 200" aria-hidden="true">
+        <circle cx="95" cy="105" r="72" fill="#C9A15C"/>
+        <path d="M26.7,177.8 Q100.1,109.8 163.3,32.2 Q89.9,100.2 26.7,177.8 Z" fill="#C9A15C"/>
+        <path d="M50.6,152.3 Q103,112.5 139.4,57.7 Q87,97.5 50.6,152.3 Z" fill="#0E2233"/>
+      </svg>
+      <div>
+        <div class="word">OK<b>A</b>M</div>
+        <div class="cover-tagline">Tecnología a medida para turismo &amp; hospitalidad</div>
+      </div>
+    </div>
 
-  <header class="hero">
-    <div class="eyebrow">Cotización comercial · COT-2026-08-001</div>
-    <h1>Sistema Integral de Gestión Turística</h1>
-    <div class="hero-sub">CRM · ERP · Dashboard/BI · Módulo Airbnb — arquitectura multi-sede para Perú Turístico</div>
-    <div class="hero-meta">
-      <div><div class="label">Proveedor</div><div class="value">OKAM</div></div>
+    <div class="cover-mid">
+      <div class="cover-eyebrow">Cotización comercial · COT-2026-08-001</div>
+      <h1 class="cover-title">Sistema Integral de Gestión Turística</h1>
+      <p class="cover-sub">CRM, ERP, Dashboard/BI y módulo de alquileres Airbnb sobre una arquitectura multi-sede, preparada para Perú Turístico.</p>
+    </div>
+
+    <div class="cover-meta">
+      <div><div class="label">Preparado para</div><div class="value accent">Perú Turístico</div></div>
+      <div><div class="label">Sede principal</div><div class="value">Cusco Turístico — Cusco</div></div>
       <div><div class="label">Fecha de emisión</div><div class="value">08 ago 2026</div></div>
       <div><div class="label">Validez de la oferta</div><div class="value">30 días</div></div>
-      <div><div class="label">Cliente</div><div class="value">Perú Turístico S.A.C.</div></div>
-      <div><div class="label">Sede principal</div><div class="value">Cusco Turístico</div></div>
     </div>
-  </header>
+  </div>
+</div>
+
+<div class="page">
 
   <div class="org">
     <span class="node matriz">Perú Turístico — matriz nacional</span>
