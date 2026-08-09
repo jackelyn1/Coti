@@ -1,0 +1,422 @@
+<title>Cotización — Sistema Perú Turístico</title>
+<style>
+  :root{
+    --ink:#16324A;
+    --ink-2:#1B4763;
+    --gold:#B8863B;
+    --terracotta:#A8552E;
+    --bg:#F5F6F3;
+    --bg-panel:#FFFFFF;
+    --bg-sunk:#ECEEEA;
+    --text:#1B2B36;
+    --text-dim:#51606B;
+    --line:#DADFE0;
+    --good:#1E7A52;
+  }
+  :root[data-theme="dark"]{
+    --ink:#DCE8F2;
+    --ink-2:#9FC4DE;
+    --gold:#D9A85C;
+    --terracotta:#D08159;
+    --bg:#0C1B26;
+    --bg-panel:#11242F;
+    --bg-sunk:#0A1720;
+    --text:#E7EDF1;
+    --text-dim:#9BAAB4;
+    --line:#213542;
+    --good:#4FBE8C;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#DCE8F2;
+      --ink-2:#9FC4DE;
+      --gold:#D9A85C;
+      --terracotta:#D08159;
+      --bg:#0C1B26;
+      --bg-panel:#11242F;
+      --bg-sunk:#0A1720;
+      --text:#E7EDF1;
+      --text-dim:#9BAAB4;
+      --line:#213542;
+      --good:#4FBE8C;
+    }
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{ max-width:920px; margin:0 auto; padding:0 24px 80px; }
+
+  h1,h2,h3{ font-family:Georgia,"Iowan Old Style","Palatino Linotype",serif; text-wrap:balance; color:var(--ink); margin:0; }
+  .eyebrow{ font-size:12.5px; letter-spacing:.11em; text-transform:uppercase; color:var(--gold); font-weight:700; }
+  p{ line-height:1.65; color:var(--text); max-width:66ch; }
+  .dim{ color:var(--text-dim); }
+  table{ font-variant-numeric: tabular-nums; }
+
+  /* ---- header ---- */
+  header.hero{
+    padding:56px 0 34px;
+    border-bottom:1px solid var(--line);
+    display:flex; flex-direction:column; gap:14px;
+  }
+  header.hero h1{ font-size:clamp(28px,4vw,40px); line-height:1.15; }
+  .hero-sub{ font-size:17px; color:var(--ink-2); font-family:Georgia,serif; font-style:italic; }
+  .hero-meta{
+    margin-top:18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:0; border:1px solid var(--line); border-radius:4px; overflow:hidden;
+  }
+  .hero-meta div{ padding:12px 16px; border-right:1px solid var(--line); background:var(--bg-panel); }
+  .hero-meta div:last-child{ border-right:none; }
+  .hero-meta .label{ font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--text-dim); margin-bottom:4px; }
+  .hero-meta .value{ font-size:14.5px; font-weight:600; color:var(--ink); }
+
+  /* ---- org tree ---- */
+  .org{
+    margin:34px 0 6px; padding:22px 24px; background:var(--bg-panel); border:1px solid var(--line); border-radius:6px;
+    display:flex; flex-wrap:wrap; align-items:center; gap:10px 4px; font-size:14.5px;
+  }
+  .org .node{ padding:7px 14px; border-radius:20px; border:1px solid var(--line); background:var(--bg-sunk); white-space:nowrap; }
+  .org .node.matriz{ border-color:var(--gold); color:var(--ink); font-weight:700; background:transparent; }
+  .org .node.sede{ color:var(--text-dim); }
+  .org .arrow{ color:var(--text-dim); }
+
+  /* ---- summary stats ---- */
+  .stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:6px; overflow:hidden; margin:28px 0 8px; }
+  .stat{ background:var(--bg-panel); padding:18px 18px; }
+  .stat .n{ font-family:Georgia,serif; font-size:26px; color:var(--gold); }
+  .stat .l{ font-size:12px; color:var(--text-dim); margin-top:2px; }
+
+  section{ padding:44px 0; border-bottom:1px solid var(--line); }
+  section:last-of-type{ border-bottom:none; }
+  section h2{ font-size:22px; margin-bottom:6px; }
+  .section-intro{ margin-bottom:22px; }
+  .num{ display:inline-block; font-family:Georgia,serif; color:var(--gold); font-size:13px; margin-right:8px; }
+
+  h3.sub{ font-size:15.5px; color:var(--ink-2); margin:26px 0 10px; font-family:-apple-system,"Segoe UI",Roboto,sans-serif; font-weight:700; }
+  ul.feat{ margin:0 0 4px; padding:0; list-style:none; display:grid; gap:8px; }
+  ul.feat li{ position:relative; padding-left:18px; line-height:1.55; font-size:14.5px; color:var(--text); }
+  ul.feat li::before{ content:"—"; position:absolute; left:0; color:var(--gold); }
+
+  /* ---- tables ---- */
+  .tbl-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:6px; margin-top:6px; }
+  table.price{ width:100%; border-collapse:collapse; min-width:560px; background:var(--bg-panel); }
+  table.price th{ text-align:left; font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--bg); background:var(--ink); padding:11px 16px; }
+  table.price th.r, table.price td.r{ text-align:right; }
+  table.price td{ padding:11px 16px; font-size:14px; border-top:1px solid var(--line); }
+  table.price tr:nth-child(even) td{ background:var(--bg-sunk); }
+  table.price td.mod{ color:var(--ink); font-weight:700; }
+  table.price tfoot td{ border-top:2px solid var(--gold); font-weight:700; color:var(--ink); background:var(--bg-panel); }
+
+  .totalbar{ display:flex; justify-content:flex-end; gap:26px; margin-top:14px; flex-wrap:wrap; }
+  .totalbar .box{ text-align:right; }
+  .totalbar .box .l{ font-size:12px; color:var(--text-dim); }
+  .totalbar .box .v{ font-family:Georgia,serif; font-size:19px; color:var(--ink); }
+  .totalbar .box.final .v{ font-size:26px; color:var(--gold); }
+
+  .note{ font-size:12.8px; color:var(--text-dim); margin-top:10px; font-style:italic; }
+
+  /* ---- phases (legitimate sequence) ---- */
+  .phases{ display:grid; gap:14px; margin-top:8px; }
+  .phase{ display:grid; grid-template-columns:44px 1fr auto; gap:16px; align-items:start; padding:16px 18px; background:var(--bg-panel); border:1px solid var(--line); border-left:3px solid var(--gold); border-radius:4px; }
+  .phase .idx{ font-family:Georgia,serif; font-size:22px; color:var(--gold); }
+  .phase .name{ font-weight:700; color:var(--ink); font-size:14.5px; }
+  .phase .desc{ font-size:13.5px; color:var(--text-dim); margin-top:3px; }
+  .phase .amt{ text-align:right; font-family:Georgia,serif; font-size:16px; color:var(--ink); white-space:nowrap; }
+  .phase .dur{ font-size:11.5px; color:var(--text-dim); text-align:right; margin-top:2px; }
+
+  .plan-toggle{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:22px; }
+  @media (max-width:640px){ .plan-toggle{ grid-template-columns:1fr; } }
+  .plan-card{ background:var(--bg-panel); border:1px solid var(--line); border-radius:6px; padding:20px; }
+  .plan-card h4{ margin:0 0 8px; font-size:15px; color:var(--ink); font-family:Georgia,serif; }
+  .plan-card p{ font-size:13.5px; color:var(--text-dim); }
+  .plan-card .big{ font-family:Georgia,serif; font-size:22px; color:var(--gold); margin-top:8px; }
+
+  .maint-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:8px; }
+  .maint-card{ background:var(--bg-panel); border:1px solid var(--line); border-radius:6px; padding:18px; }
+  .maint-card .tier{ font-size:11.5px; text-transform:uppercase; letter-spacing:.07em; color:var(--gold); font-weight:700; }
+  .maint-card .price{ font-family:Georgia,serif; font-size:22px; color:var(--ink); margin:6px 0 8px; }
+  .maint-card .desc{ font-size:13px; color:var(--text-dim); line-height:1.5; }
+
+  .timeline{ margin-top:10px; }
+  .tl-row{ display:grid; grid-template-columns:90px 1fr; gap:16px; padding:10px 0; border-top:1px solid var(--line); font-size:14px; }
+  .tl-row:first-child{ border-top:none; }
+  .tl-week{ color:var(--gold); font-family:Georgia,serif; font-weight:700; }
+
+  .terms{ margin:0; padding:0; list-style:none; display:grid; gap:10px; }
+  .terms li{ position:relative; padding-left:20px; font-size:14px; color:var(--text-dim); line-height:1.55; }
+  .terms li::before{ content:"•"; position:absolute; left:0; color:var(--terracotta); }
+
+  footer{ padding:40px 0 10px; text-align:center; }
+  footer .cta{ color:var(--text-dim); font-size:14px; }
+  footer .brand{ margin-top:10px; font-size:12.5px; color:var(--text-dim); letter-spacing:.03em; }
+  .placeholder{ color:var(--terracotta); }
+
+  /* ---- tablet ---- */
+  @media (max-width:768px){
+    .page{ padding:0 18px 60px; }
+    header.hero{ padding:40px 0 26px; }
+    .hero-sub{ font-size:15.5px; }
+    .stats{ grid-template-columns:repeat(2,1fr); }
+    section{ padding:34px 0; }
+    section h2{ font-size:20px; }
+    .maint-grid{ grid-template-columns:repeat(2,1fr); }
+  }
+
+  /* ---- phone ---- */
+  @media (max-width:480px){
+    .page{ padding:0 14px 48px; }
+    header.hero{ padding:32px 0 22px; gap:10px; }
+    .eyebrow{ font-size:11px; }
+    .hero-sub{ font-size:14.5px; }
+    .hero-meta{ grid-template-columns:1fr 1fr; }
+    .hero-meta div{ border-bottom:1px solid var(--line); }
+    .org{ padding:16px; gap:8px 4px; font-size:13px; }
+    .org .node{ padding:6px 11px; }
+    .stats{ grid-template-columns:1fr 1fr; }
+    .stat{ padding:14px; }
+    .stat .n{ font-size:21px; }
+    section{ padding:28px 0; }
+    section h2{ font-size:18px; }
+    p{ font-size:14.5px; }
+    h3.sub{ font-size:14.5px; margin:20px 0 8px; }
+    ul.feat li{ font-size:13.8px; }
+
+    table.price{ min-width:0; width:520px; }
+    table.price th, table.price td{ padding:9px 11px; font-size:13px; }
+
+    .totalbar{ justify-content:flex-start; gap:18px; }
+    .totalbar .box{ text-align:left; }
+
+    .phase{ grid-template-columns:32px 1fr; row-gap:8px; padding:14px; }
+    .phase .idx{ font-size:18px; }
+    .phase > div:last-child{ grid-column:1 / -1; display:flex; justify-content:space-between; align-items:baseline; border-top:1px dashed var(--line); padding-top:8px; }
+    .phase .amt{ font-size:15px; }
+    .phase .dur{ margin-top:0; }
+
+    .maint-grid{ grid-template-columns:1fr; }
+    .tl-row{ grid-template-columns:70px 1fr; gap:10px; font-size:13.5px; }
+
+    .totalbar .box.final .v{ font-size:22px; }
+  }
+</style>
+
+<div class="page">
+
+  <header class="hero">
+    <div class="eyebrow">Cotización comercial · COT-2026-08-001</div>
+    <h1>Sistema Integral de Gestión Turística</h1>
+    <div class="hero-sub">CRM · ERP · Dashboard/BI · Módulo Airbnb — arquitectura multi-sede para Perú Turístico</div>
+    <div class="hero-meta">
+      <div><div class="label">Proveedor</div><div class="value">OKAM</div></div>
+      <div><div class="label">Fecha de emisión</div><div class="value">08 ago 2026</div></div>
+      <div><div class="label">Validez de la oferta</div><div class="value">30 días</div></div>
+      <div><div class="label">Cliente</div><div class="value">Perú Turístico S.A.C.</div></div>
+      <div><div class="label">Sede principal</div><div class="value">Cusco Turístico</div></div>
+    </div>
+  </header>
+
+  <div class="org">
+    <span class="node matriz">Perú Turístico — matriz nacional</span>
+    <span class="arrow">→</span>
+    <span class="node sede">Cusco Turístico (sede principal, Cusco)</span>
+    <span class="arrow">→</span>
+    <span class="node sede">Sede 2</span>
+    <span class="arrow">→</span>
+    <span class="node sede">Sede 3 a más</span>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="n">4</div><div class="l">módulos del sistema</div></div>
+    <div class="stat"><div class="n">S/ 41,400</div><div class="l">inversión paquete completo</div></div>
+    <div class="stat"><div class="n">~5 meses</div><div class="l">implementación total</div></div>
+    <div class="stat"><div class="n">4 fases</div><div class="l">pago flexible por partes</div></div>
+  </div>
+
+  <section id="resumen">
+    <h2>Resumen ejecutivo</h2>
+    <p class="section-intro">
+      Se propone el desarrollo e implementación de un sistema de gestión integral para <b>Perú Turístico</b>,
+      empresa matriz con sede principal <b>Cusco Turístico</b> y operación en tres o más sedes a nivel nacional.
+      La plataforma unifica la venta de paquetes turísticos y el alquiler de propiedades tipo Airbnb, con visión
+      consolidada para la matriz y autonomía operativa para cada sede. La inversión puede realizarse
+      <b>de forma flexible y por partes</b>: por módulo entregado o en cuotas mensuales.
+    </p>
+  </section>
+
+  <section id="alcance">
+    <h2><span class="num">01</span>Alcance del sistema</h2>
+    <p class="section-intro dim">Cuatro módulos funcionales sobre una arquitectura multi-sede compartida.</p>
+
+    <h3 class="sub">CRM — Gestión comercial y de clientes</h3>
+    <ul class="feat">
+      <li>Registro y segmentación de clientes: turistas nacionales, extranjeros y agencias aliadas.</li>
+      <li>Leads y cotizaciones de paquetes turísticos, con embudo de ventas visible por sede.</li>
+      <li>Historial de reservas, preferencias de viaje y comunicaciones (WhatsApp, correo, llamadas).</li>
+      <li>Recordatorios automáticos de seguimiento y encuestas de satisfacción postventa.</li>
+      <li>Asignación de asesores comerciales por sede y por cliente.</li>
+    </ul>
+
+    <h3 class="sub">ERP — Operación, facturación y control interno</h3>
+    <ul class="feat">
+      <li>Facturación electrónica conforme a SUNAT: boletas, facturas y notas de crédito.</li>
+      <li>Gestión de paquetes turísticos: costos, proveedores, cupos y disponibilidad.</li>
+      <li>Control de proveedores (hoteles, transporte, guías) y cuentas por pagar.</li>
+      <li>Caja y contabilidad básica: ingresos, egresos y comisiones por sede.</li>
+      <li>Inventario para propiedades y unidades de alquiler (kits de bienvenida, insumos).</li>
+    </ul>
+
+    <h3 class="sub">Dashboard / BI — Indicadores en tiempo real</h3>
+    <ul class="feat">
+      <li>Ventas consolidadas por sede y a nivel nacional para Perú Turístico.</li>
+      <li>Ocupación y rentabilidad de propiedades Airbnb.</li>
+      <li>Ranking de paquetes más vendidos y estacionalidad de la demanda.</li>
+      <li>Comisiones por asesor y por sede frente a metas.</li>
+      <li>Alertas automáticas: baja ocupación, vencimiento de reservas, stock bajo.</li>
+    </ul>
+
+    <h3 class="sub">Módulo Airbnb / Alquileres</h3>
+    <ul class="feat">
+      <li>Ficha de propiedades: fotos, tarifas, capacidad y reglas de la casa.</li>
+      <li>Calendario de disponibilidad con bloqueo automático de fechas reservadas.</li>
+      <li>Tarifas dinámicas según temporada, feriados y eventos regionales.</li>
+      <li>Registro de check-in / check-out y estado de limpieza y mantenimiento.</li>
+      <li>Referencia cruzada con Airbnb y Booking para evitar doble reserva.</li>
+    </ul>
+
+    <h3 class="sub">Arquitectura multi-sede</h3>
+    <ul class="feat">
+      <li>Perú Turístico como matriz; Cusco Turístico como sede principal; sedes adicionales ilimitadas en el plan superior.</li>
+      <li>Roles diferenciados: administrador nacional, administrador de sede, asesor, cajero.</li>
+      <li>Reportes consolidados a nivel nacional y desglosados por sede.</li>
+      <li>Cada sede opera con autonomía diaria, sin perder la visión centralizada de la matriz.</li>
+    </ul>
+  </section>
+
+  <section id="inversion">
+    <h2><span class="num">02</span>Inversión por módulo</h2>
+    <p class="section-intro dim">Precios en Soles (S/). Incluyen análisis, diseño, desarrollo, pruebas y despliegue de cada módulo.</p>
+
+    <div class="tbl-wrap">
+      <table class="price">
+        <thead>
+          <tr><th>Módulo</th><th>Descripción</th><th class="r">Inversión</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="mod">CRM</td><td>Clientes, leads, reservas y seguimiento comercial</td><td class="r">S/ 8,500</td></tr>
+          <tr><td class="mod">ERP</td><td>Facturación electrónica, proveedores, inventario y contabilidad</td><td class="r">S/ 13,000</td></tr>
+          <tr><td class="mod">Dashboard / BI</td><td>Reportes e indicadores en tiempo real, multi-sede</td><td class="r">S/ 6,500</td></tr>
+          <tr><td class="mod">Módulo Airbnb</td><td>Propiedades, calendario, tarifas dinámicas y check-in/out</td><td class="r">S/ 7,500</td></tr>
+          <tr><td class="mod">Arquitectura multi-sede</td><td>Roles, permisos y consolidación nacional (hasta 5 sedes)</td><td class="r">S/ 5,000</td></tr>
+          <tr><td class="mod">Implementación</td><td>Migración de datos, configuración y capacitación al personal</td><td class="r">S/ 4,500</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="totalbar">
+      <div class="box"><div class="l">Subtotal</div><div class="v">S/ 45,000</div></div>
+      <div class="box"><div class="l">Descuento paquete completo (8%)</div><div class="v">− S/ 3,600</div></div>
+      <div class="box final"><div class="l">Total paquete completo</div><div class="v">S/ 41,400</div></div>
+    </div>
+    <p class="note">El descuento del 8% aplica solo al contratar los 4 módulos + arquitectura multi-sede + implementación en una sola orden. Los precios no incluyen IGV.</p>
+  </section>
+
+  <section id="pago">
+    <h2><span class="num">03</span>Plan de pago flexible</h2>
+    <p class="section-intro dim">El proyecto se financia de forma progresiva: se elige pagar por fase entregada o en cuotas mensuales.</p>
+
+    <h3 class="sub">Opción A — Por fases (módulo entregado)</h3>
+    <div class="phases">
+      <div class="phase">
+        <div class="idx">1</div>
+        <div><div class="name">Arquitectura multi-sede + CRM</div><div class="desc">Configuración de sedes, roles y módulo comercial</div></div>
+        <div><div class="amt">S/ 13,500</div><div class="dur">6 semanas</div></div>
+      </div>
+      <div class="phase">
+        <div class="idx">2</div>
+        <div><div class="name">ERP</div><div class="desc">Facturación SUNAT, inventario y contabilidad</div></div>
+        <div><div class="amt">S/ 13,000</div><div class="dur">7 semanas</div></div>
+      </div>
+      <div class="phase">
+        <div class="idx">3</div>
+        <div><div class="name">Módulo Airbnb + Dashboard/BI</div><div class="desc">Alquileres, calendario e indicadores en tiempo real</div></div>
+        <div><div class="amt">S/ 14,000</div><div class="dur">6 semanas</div></div>
+      </div>
+      <div class="phase">
+        <div class="idx">4</div>
+        <div><div class="name">Implementación y capacitación</div><div class="desc">Migración de datos y puesta en marcha</div></div>
+        <div><div class="amt">S/ 4,500</div><div class="dur">2 semanas</div></div>
+      </div>
+    </div>
+    <p class="note">Cada fase se factura por separado: 40% al inicio, 60% contra entrega y conformidad. Se puede pausar entre fases sin penalidad.</p>
+
+    <h3 class="sub">Opción B — Cuotas mensuales (paquete completo)</h3>
+    <div class="plan-toggle">
+      <div class="plan-card">
+        <h4>Cuota inicial</h4>
+        <p>20% del total al firmar el contrato, antes de iniciar el desarrollo.</p>
+        <div class="big">S/ 8,280</div>
+      </div>
+      <div class="plan-card">
+        <h4>5 cuotas mensuales</h4>
+        <p>Saldo fraccionado en 5 cuotas iguales (incluye 8% por financiamiento). El sistema se entrega de forma progresiva.</p>
+        <div class="big">S/ 6,624 / mes</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="soporte">
+    <h2><span class="num">04</span>Soporte y mantenimiento</h2>
+    <p class="section-intro dim">Opcional, no incluido en el total del proyecto.</p>
+    <div class="maint-grid">
+      <div class="maint-card">
+        <div class="tier">Básico</div>
+        <div class="price">S/ 450<span style="font-size:13px;color:var(--text-dim)">/mes</span></div>
+        <div class="desc">Hosting, backups automáticos y soporte correctivo de errores.</div>
+      </div>
+      <div class="maint-card">
+        <div class="tier">Estándar</div>
+        <div class="price">S/ 900<span style="font-size:13px;color:var(--text-dim)">/mes</span></div>
+        <div class="desc">Básico + actualizaciones periódicas y soporte por WhatsApp/correo en horario laboral.</div>
+      </div>
+      <div class="maint-card">
+        <div class="tier">Premium</div>
+        <div class="price">S/ 1,500<span style="font-size:13px;color:var(--text-dim)">/mes</span></div>
+        <div class="desc">Estándar + mejoras continuas y soporte prioritario para todas las sedes.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cronograma">
+    <h2><span class="num">05</span>Cronograma estimado</h2>
+    <p class="section-intro dim">Duración total del paquete completo, ejecutado de forma continua: 19 a 21 semanas (~5 meses).</p>
+    <div class="timeline">
+      <div class="tl-row"><div class="tl-week">Sem. 1–2</div><div>Levantamiento de requerimientos y definición de flujos por sede</div></div>
+      <div class="tl-row"><div class="tl-week">Sem. 3–6</div><div>Arquitectura multi-sede y CRM</div></div>
+      <div class="tl-row"><div class="tl-week">Sem. 7–13</div><div>ERP: facturación SUNAT, inventario y contabilidad</div></div>
+      <div class="tl-row"><div class="tl-week">Sem. 14–19</div><div>Módulo Airbnb y Dashboard/BI</div></div>
+      <div class="tl-row"><div class="tl-week">Sem. 20–21</div><div>Migración, pruebas integrales, capacitación y salida a producción</div></div>
+    </div>
+  </section>
+
+  <section id="condiciones">
+    <h2><span class="num">06</span>Condiciones generales</h2>
+    <ul class="terms">
+      <li>Precios expresados en Soles (S/), no incluyen IGV.</li>
+      <li>Cotización válida por 30 días calendario desde la fecha de emisión.</li>
+      <li>Hosting, servidor y dominio se cotizan aparte según el proveedor elegido.</li>
+      <li>Cambios de alcance no contemplados en este documento se cotizan como adicionales.</li>
+      <li>El cliente entrega información y accesos necesarios (logo, datos SUNAT, catálogo de propiedades y paquetes) para no afectar el cronograma.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <div class="cta">Quedamos atentos a coordinar una reunión de presentación de esta propuesta.</div>
+    <div class="brand">OKAM · okamtech365@gmail.com · 992 123 781 — Yasmina Churata, CEO</div>
+  </footer>
+
+</div>
